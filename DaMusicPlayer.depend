@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1608739158 source:/home/abolfazl/Desktop/CProjects/GUI/DaMusicPlayer/main.c
+	<stdio.h>
+	<gtk-2.0/gtk/gtk.h>
+	<gdk/gdkkeysyms.h>
+
+1575976750 /usr/include/gtk-2.0/gdk/gdkkeysyms.h
+	<gdk/gdkkeysyms-compat.h>
+
+1575976750 /usr/include/gtk-2.0/gdk/gdkkeysyms-compat.h
+
