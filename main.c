@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <gtk-2.0/gtk/gtk.h>
-
-
+#include "menubar.h"
+#include "public_callback_fun.h"
 
 int main(int argc, int *argv[])
 {
@@ -9,7 +9,9 @@ int main(int argc, int *argv[])
 
     GtkWidget *app ;
 
+
     GtkWidget *main_v_box ;
+
 
     GtkWidget *time_toolbar_h_box ;
     GtkWidget *timer_label ;
@@ -40,11 +42,18 @@ int main(int argc, int *argv[])
     gtk_init(&argc,&argv);
     app = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_position(GTK_WINDOW(app),GTK_WIN_POS_CENTER);
-    gtk_widget_set_size_request(app,450,75);
+    gtk_widget_set_size_request(app,450,95);
     gtk_window_set_resizable(GTK_WINDOW (app),FALSE);
 
 
-    main_v_box = gtk_vbox_new(TRUE,5);
+    main_v_box = gtk_vbox_new(TRUE,0);
+    // ###########################################
+
+
+    create_menu_bar();
+    gtk_box_pack_start(GTK_BOX(main_v_box),menu_bar,FALSE,FALSE,0);
+    gtk_window_add_accel_group(GTK_WINDOW(app),accel_group);
+
 
     // ###########################################
 
@@ -57,6 +66,7 @@ int main(int argc, int *argv[])
 
     time_slider = gtk_hscale_new_with_range(0,100,1);
     gtk_scale_set_draw_value(GTK_SCALE(time_slider),FALSE);
+
     gtk_widget_set_size_request(time_slider, 370, -1);
 
     gtk_box_pack_start(GTK_BOX(time_toolbar_h_box),timer_label,TRUE,FALSE,10);
@@ -113,6 +123,11 @@ int main(int argc, int *argv[])
 
     gtk_container_add(GTK_CONTAINER(app),main_v_box);
     gtk_widget_show_all(app);
+
+    g_signal_connect(quit_mi,"activate",G_CALLBACK(close_app),NULL);
+    gtk_widget_add_accelerator(quit_mi, "activate", accel_group,
+                               GDK_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    g_signal_connect(app,"delete_event",G_CALLBACK(close_app),NULL);
 
     gtk_main ();
 
